@@ -6,6 +6,7 @@ import tyler.springframework.recipeproject.domain.Recipe;
 import tyler.springframework.recipeproject.repositories.RecipeRepository;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Slf4j
@@ -25,4 +26,18 @@ public class RecipeServiceImpl implements RecipeService{
         recipeRepository.findAll().iterator().forEachRemaining(recipeSet::add);
         return recipeSet;
     }
+
+    @Override
+    public Recipe findById(Long id) {
+
+        Optional<Recipe> optionalRecipe = recipeRepository.findById(id);
+
+        if (!optionalRecipe.isPresent()){
+            throw new RuntimeException("Recipe Not Found");
+        }
+
+        return optionalRecipe.get();
+    }
+
+
 }
